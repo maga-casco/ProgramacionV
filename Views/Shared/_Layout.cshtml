@@ -1,50 +1,244 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProgramacionV</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ProgramacionV.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - Gym System</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Poppins', sans-serif;
+                background: #f5f7fb;
+                color: #2d3748;
+            }
+
+            /* ==========================
+                       SIDEBAR
+                    ========================== */
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 260px;
+                height: 100vh;
+                background: #1f2937;
+                padding: 30px 20px;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 4px 0 20px rgba(0,0,0,.08);
+            }
+
+            .logo {
+                text-align: center;
+                color: white;
+                margin-bottom: 40px;
+            }
+
+                .logo i {
+                    font-size: 40px;
+                    color: #a78bfa;
+                    margin-bottom: 10px;
+                }
+
+                .logo h2 {
+                    font-size: 1.5rem;
+                    margin: 0;
+                }
+
+                .logo p {
+                    color: #94a3b8;
+                    font-size: .85rem;
+                    margin-top: 5px;
+                }
+
+            /* ==========================
+                       MENÚ
+                    ========================== */
+
+            .menu-item {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                text-decoration: none;
+                color: #cbd5e1;
+                padding: 14px 16px;
+                border-radius: 12px;
+                margin-bottom: 8px;
+                transition: .25s;
+                font-weight: 500;
+            }
+
+                .menu-item:hover {
+                    background: rgba(167,139,250,.18);
+                    color: white;
+                    transform: translateX(4px);
+                }
+
+                .menu-item i {
+                    width: 22px;
+                    text-align: center;
+                }
+
+            /* ==========================
+                       CONTENIDO
+                    ========================== */
+
+            .content {
+                margin-left: 260px;
+                padding: 25px;
+                min-height: 100vh;
+            }
+
+            .content-card {
+                background: white;
+                border-radius: 18px;
+                padding: 35px;
+                min-height: calc(100vh - 50px);
+                box-shadow: 0 10px 30px rgba(0,0,0,.05);
+                position: relative;
+            }
+
+                .content-card::before {
+                    content: "";
+                    position: absolute;
+                    top: 20px;
+                    right: 30px;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background: #22c55e;
+                    box-shadow: -22px 0 #facc15, -44px 0 #ef4444;
+                }
+
+            /* ==========================
+                       LOGOUT
+                    ========================== */
+
+            .logout {
+                margin-top: auto;
+            }
+
+            .btn-logout {
+                display: block;
+                text-align: center;
+                text-decoration: none;
+                color: white;
+                padding: 12px;
+                border-radius: 12px;
+                border: 1px solid rgba(255,255,255,.15);
+                transition: .3s;
+            }
+
+                .btn-logout:hover {
+                    background: #ef4444;
+                    border-color: #ef4444;
+                    color: white;
+                }
+
+            /* ==========================
+                       SCROLL
+                    ========================== */
+
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: #d1d5db;
+                border-radius: 20px;
+            }
+
+    </style>
+
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProgramacionV</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-dumbbell"></i>
+
+            <h2>GYM SYSTEM</h2>
+
+            <p>Sistema de Gestión</p>
+
+        </div>
+
+        <a asp-controller="Home"
+               asp-action="Index"
+               class="menu-item">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Dashboard
+
+        </a>
+
+        <a asp-controller="Socio"
+               asp-action="Index"
+               class="menu-item">
+
+            <i class="fa-solid fa-users"></i>
+
+            Socios
+
+        </a>
+
+        <a asp-controller="Usuario"
+               asp-action="Create"
+               class="menu-item">
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            Usuarios
+
+        </a>
+
+        <div class="logout">
+
+            <a asp-controller="Usuario"
+                   asp-action="Logout"
+                   class="btn-logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Cerrar Sesión
+
+            </a>
+
+        </div>
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ProgramacionV - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="content">
+
+        <div class="content-card">
+
+            @RenderBody()
+
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    </div>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

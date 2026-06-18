@@ -1,0 +1,212 @@
+﻿@model ProgramacionV.Models.SocioViewModel
+
+@{
+    ViewData["Title"] = "Eliminar Socio";
+}
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+    .eliminar-card {
+        max-width: 600px;
+        margin: 60px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+        font-family: 'Poppins',sans-serif;
+        text-align: center;
+    }
+
+
+    .icono-eliminar {
+        width: 80px;
+        height: 80px;
+        margin: auto;
+        border-radius: 50%;
+        background: #fee2e2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 35px;
+        margin-bottom: 20px;
+    }
+
+
+    .titulo-eliminar {
+        color: #2d3748;
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+
+    .texto {
+        color: #718096;
+        margin-bottom: 25px;
+    }
+
+
+
+    .datos {
+        background: #f8fafc;
+        border-radius: 18px;
+        padding: 20px;
+        text-align: left;
+        margin-bottom: 30px;
+    }
+
+
+
+    .dato {
+        margin-bottom: 10px;
+        color: #4a5568;
+    }
+
+
+
+        .dato strong {
+            color: #2d3748;
+        }
+
+
+
+    .botones {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+
+
+    .btn-eliminar-confirmar {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+
+        .btn-eliminar-confirmar:hover {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+
+
+    .btn-cancelar {
+        background: #f1f5f9;
+        color: #475569;
+        padding: 12px 25px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+
+        .btn-cancelar:hover {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+</style>
+
+
+
+
+<div class="eliminar-card">
+
+
+    <div class="icono-eliminar">
+        🗑️
+    </div>
+
+
+    <h1 class="titulo-eliminar">
+        ¿Desea eliminar este socio?
+    </h1>
+
+
+    <p class="texto">
+        Esta acción no se puede deshacer.
+    </p>
+
+
+
+    <div class="datos">
+
+
+        <div class="dato">
+
+            <strong>Nombre:</strong>
+            @Model.Nombre
+
+        </div>
+
+
+        <div class="dato">
+
+            <strong>Apellido:</strong>
+            @Model.Apellido
+
+        </div>
+
+
+        <div class="dato">
+
+            <strong>DNI:</strong>
+            @Model.DNI
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+    <div class="botones">
+
+
+        <form asp-action="DeleteConfirmado"
+              method="post">
+
+
+            <input type="hidden"
+                   asp-for="Id" />
+
+
+            <button type="submit"
+                    class="btn-eliminar-confirmar">
+
+                🗑 Eliminar
+
+            </button>
+
+
+        </form>
+
+
+
+        <a asp-action="Index"
+               class="btn-cancelar">
+
+            Cancelar
+
+        </a>
+
+
+    </div>
+
+
+</div>

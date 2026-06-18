@@ -1,8 +1,147 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ProgramacionV.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+    .dashboard {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .titulo {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 5px;
+    }
+
+    .subtitulo {
+        color: #718096;
+        margin-bottom: 30px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+        gap: 20px;
+        margin-bottom: 35px;
+    }
+
+    .card-dashboard {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(0,0,0,.05);
+        transition: .3s;
+    }
+
+        .card-dashboard:hover {
+            transform: translateY(-3px);
+        }
+
+    .card-icono {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .card-numero {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #7c3aed;
+    }
+
+    .card-texto {
+        color: #718096;
+    }
+
+    .acciones {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn-dashboard {
+        background: #a78bfa;
+        color: white;
+        text-decoration: none;
+        padding: 14px 22px;
+        border-radius: 15px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+        .btn-dashboard:hover {
+            background: #8b5cf6;
+            color: white;
+        }
+
+    .btn-verde {
+        background: #22c55e;
+    }
+
+        .btn-verde:hover {
+            background: #16a34a;
+        }
+
+</style>
+
+<div class="dashboard">
+
+    <h1 class="titulo">
+        👋 Bienvenido al Sistema de Gestión
+    </h1>
+
+    <p class="subtitulo">
+        Panel principal del gimnasio.
+    </p>
+
+    <div class="cards">
+
+        <div class="card-dashboard">
+
+            <div class="card-icono">👥</div>
+
+            <div class="card-numero">
+                @Model.TotalSocios
+            </div>
+
+            <div class="card-texto">
+                Socios registrados
+            </div>
+
+        </div>
+
+        <div class="card-dashboard">
+
+            <div class="card-icono">👤</div>
+
+            <div class="card-numero">
+                @Model.TotalUsuarios
+            </div>
+
+            <div class="card-texto">
+                Usuarios del sistema
+            </div>
+
+        </div>
+
+        <div class="card-dashboard">
+
+            <div class="card-icono">📅</div>
+
+            <div class="card-numero">
+                @Model.FechaActual.ToString("dd/MM")
+            </div>
+
+            <div class="card-texto">
+                Fecha actual
+            </div>
+
+        </div>
+
+    </div>
 </div>

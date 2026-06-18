@@ -1,0 +1,220 @@
+﻿@model ProgramacionV.Models.UsuarioViewModel
+
+@{
+    ViewData["Title"] = "Alta de Usuario";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    .usuario-card {
+        max-width: 650px;
+        margin: 40px auto;
+        background: white;
+        border-radius: 25px;
+        padding: 40px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .usuario-titulo {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 8px;
+    }
+
+    .usuario-subtitulo {
+        color: #718096;
+        margin-bottom: 35px;
+        font-size: .95rem;
+    }
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #4a5568;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 18px;
+        border: none;
+        background: #f7f7fb;
+        border-radius: 15px;
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+        transition: all .3s ease;
+    }
+
+        .form-control:focus {
+            outline: none;
+            background: #f3efff;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, .25);
+        }
+
+    .text-danger {
+        font-size: .85rem;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .acciones {
+        margin-top: 35px;
+        display: flex;
+        gap: 12px;
+    }
+
+    .btn-guardar {
+        background: #a78bfa;
+        color: white;
+        border: none;
+        border-radius: 15px;
+        padding: 12px 28px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+        .btn-guardar:hover {
+            background: #8b5cf6;
+            transform: translateY(-2px);
+        }
+
+    .btn-volver {
+        background: #f1f2f6;
+        color: #4a5568;
+        text-decoration: none;
+        border-radius: 15px;
+        padding: 12px 28px;
+        font-weight: 500;
+        transition: .3s;
+    }
+
+        .btn-volver:hover {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+    .icono {
+        width: 70px;
+        height: 70px;
+        background: #f3efff;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    .alerta-exito {
+        max-width: 650px;
+        margin: 25px auto -20px auto;
+        background: #ecfdf5;
+        border: 1px solid #86efac;
+        color: #166534;
+        border-radius: 18px;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-family: 'Poppins', sans-serif;
+        box-shadow: 0 10px 25px rgba(34,197,94,0.12);
+        animation: aparecer .35s ease;
+    }
+
+        .alerta-exito strong {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .alerta-exito div {
+            font-size: .9rem;
+        }
+
+
+    .alerta-icono {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #22c55e;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: bold;
+    }
+</style>
+
+@if (Context.Session.GetString("UsuarioInsertado") != null)
+{
+    <div class="alerta-exito">
+        <span class="alerta-icono">✓</span>
+
+        <div>
+            <strong>¡Usuario agregado correctamente!</strong>
+            <div>
+                El usuario <b>@Context.Session.GetString("UsuarioInsertado")</b> fue dado de alta.
+            </div>
+        </div>
+    </div>
+}
+
+<div class="usuario-card">
+
+    <div class="icono">
+        👤
+    </div>
+
+    <h1 class="usuario-titulo">Alta de Usuario</h1>
+
+    <p class="usuario-subtitulo">
+        Complete los datos para registrar un nuevo usuario en el sistema.
+    </p>
+
+    <form asp-action="Create" method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Username" class="form-label">
+                Nombre de Usuario
+            </label>
+            <input asp-for="Username" class="form-control" placeholder="Ingrese un usuario" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password" class="form-label">
+                Contraseña
+            </label>
+            <input asp-for="Password" type="password" class="form-control" placeholder="Ingrese una contraseña" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="acciones">
+            <button type="submit" class="btn btn-guardar">
+                Guardar Usuario
+            </button>
+
+            <a asp-action="Index" class="btn-volver">
+                Volver
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

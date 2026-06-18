@@ -1,0 +1,382 @@
+﻿@model List<ProgramacionV.Models.SocioViewModel>
+
+@{
+    ViewData["Title"] = "Listado de Socios";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+    .contenedor-socios {
+        font-family: 'Poppins', sans-serif;
+    }
+
+
+    .cabecera {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+
+    .acciones-cabecera {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+
+    .titulo {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0;
+    }
+
+
+    .subtitulo {
+        color: #718096;
+        margin-top: 5px;
+    }
+
+
+    /* BOTON NUEVO */
+
+    .btn-nuevo {
+        background: #22c55e;
+        color: white;
+        text-decoration: none;
+        padding: 12px 22px;
+        border-radius: 14px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+
+        .btn-nuevo:hover {
+            background: #16a34a;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+
+    /* BUSCADOR */
+
+    .buscador {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+
+    .input-busqueda {
+        width: 350px;
+        padding: 12px 18px;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        outline: none;
+        font-family: 'Poppins',sans-serif;
+        font-size: .95rem;
+    }
+
+
+        .input-busqueda:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px #ede9fe;
+        }
+
+
+    .btn-buscar {
+        background: #7c3aed;
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+
+        .btn-buscar:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+        }
+
+
+
+    /* TABLA */
+
+
+    .tabla-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,.05);
+    }
+
+
+    .tabla-socios {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+
+        .tabla-socios thead {
+            background: #f8f7ff;
+        }
+
+
+        .tabla-socios th {
+            padding: 18px;
+            text-align: left;
+            color: #4a5568;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+
+        .tabla-socios td {
+            padding: 18px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #4a5568;
+        }
+
+
+        .tabla-socios tbody tr:hover {
+            background: #fafaff;
+        }
+
+
+
+    /* ACCIONES */
+
+
+    .acciones {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    }
+
+
+        .acciones a {
+            color: #64748b;
+            font-size: 1.1rem;
+            transition: .2s;
+            text-decoration: none;
+        }
+
+
+            .acciones a:hover {
+                transform: scale(1.15);
+            }
+
+
+            .acciones a:first-child:hover {
+                color: #f59e0b;
+            }
+
+
+            .acciones a:last-child:hover {
+                color: #ef4444;
+            }
+
+
+
+    /* ID */
+
+    .badge-id {
+        background: #f3efff;
+        color: #7c3aed;
+        padding: 6px 10px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+
+
+    /* MENSAJE */
+
+    .alerta-exito {
+        background: #ecfdf5;
+        border: 1px solid #86efac;
+        color: #166534;
+        border-radius: 15px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+</style>
+
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alerta-exito">
+
+        ✅ @TempData["Mensaje"]
+
+    </div>
+}
+
+
+
+<div class="contenedor-socios">
+    <div class="cabecera">
+        <div>
+
+            <h1 class="titulo">
+                Listado de Socios
+            </h1>
+
+
+            <p class="subtitulo">
+                Administración de socios registrados en el gimnasio.
+            </p>
+
+        </div>
+
+        <div class="acciones-cabecera">
+            <form method="get" class="buscador">
+
+
+                <input type="text"
+                       name="buscar"
+                       placeholder="Buscar por nombre, apellido o DNI..."
+                       class="input-busqueda" />
+
+
+                <button class="btn-buscar">
+                    🔍
+                </button>
+            </form>
+
+            <a asp-controller="Socio"
+                   asp-action="Create"
+                   class="btn-nuevo">
+
+                ➕ Nuevo Socio
+
+            </a>
+        </div>
+    </div>
+
+    <div class="tabla-card">
+
+
+        <table class="tabla-socios">
+
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Fecha Nac.</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var socio in Model)
+                {
+                    <tr>
+                        <td>
+
+                            <span class="badge-id">
+                                #@socio.Id
+                            </span>
+
+                        </td>
+
+
+                        <td>@socio.Nombre</td>
+                        <td>@socio.Apellido</td>
+                        <td>@socio.DNI</td>
+                        <td>
+                            @(socio.FechaNacimiento.HasValue
+                            ? socio.FechaNacimiento.Value.ToString("dd/MM/yyyy")
+                            : "-")
+                        </td>
+
+                        <td>@socio.Telefono</td>
+                        <td>@socio.Email</td>
+                        <td>@socio.Direccion</td>
+
+                        <td>
+
+                            @if (socio.Activo)
+                            {
+                                <span style="
+                                    background:#dcfce7;
+                                    color:#166534;
+                                    padding:6px 12px;
+                                    border-radius:12px;
+                                    font-weight:600;">
+        
+                                    ✓ Activo
+
+                                </span>
+                            }
+                            else
+                            {
+                                <span style="
+                                    background:#fee2e2;
+                                    color:#991b1b;
+                                    padding:6px 12px;
+                                    border-radius:12px;
+                                    font-weight:600;">
+
+                                    ✕ Inactivo
+
+                                </span>
+                            }
+
+                        </td>
+                        <td>
+
+
+                            <div class="acciones">
+
+
+                                <a asp-action="Edit"
+                                       asp-route-id="@socio.Id"
+                                       title="Editar">
+
+
+                                    <i class="fa-solid fa-pen-to-square"></i>
+
+
+                                </a>
+
+                                <a asp-action="Delete"
+                                       asp-route-id="@socio.Id"
+                                       title="Eliminar">
+
+
+                                    <i class="fa-solid fa-trash"></i>
+
+
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
