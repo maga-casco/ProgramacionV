@@ -83,33 +83,50 @@ namespace ProgramacionV.Controllers
         [HttpPost]
         public ActionResult Create(UsuarioViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+
             string passwordCrypt =
                 BCrypt.Net.BCrypt.HashPassword(model.Password);
 
+
             string connectionString =
                 _configuration.GetConnectionString("ProgramacionV");
+
 
             using (SqlConnection sqlConnection =
                    new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
 
-                string query =@"INSERT INTO dbo.Usuarios (Usuario, Contrasena) VALUES (@Usuario, @Contrasena)";
+
+                string query = @"INSERT INTO dbo.Usuarios 
+                        (Usuario, Contrasena) 
+                        VALUES (@Usuario, @Contrasena)";
+
 
                 using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
                 {
                     cmd.Parameters.AddWithValue("@Usuario", model.Username);
                     cmd.Parameters.AddWithValue("@Contrasena", passwordCrypt);
 
+
                     int count = cmd.ExecuteNonQuery();
+
 
                     if (count > 0)
                     {
-                        HttpContext.Session.SetString("UsuarioInsertado", model.Username);
+                        TempData["Mensaje"] =
+                            "Usuario agregado correctamente";
+
                         return RedirectToAction("Create");
                     }
                 }
             }
+
 
             return View(model);
         }

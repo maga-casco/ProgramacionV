@@ -321,6 +321,29 @@ ViewData["Title"] = "Modificar Socio";
 
     </div>
 
+        <div class="form-group">
+
+            <label class="form-label">
+                Estado del socio
+            </label>
+
+            <div style="display:flex; align-items:center; gap:10px;">
+
+                <input asp-for="Activo"
+                       type="checkbox"
+                       style="width:20px; height:20px;" />
+
+                <span>
+                    Socio activo
+                </span>
+
+            </div>
+
+            <span asp-validation-for="Activo"
+                  class="text-danger"></span>
+
+        </div>
+
     <div class="acciones">
 
         <button type="submit"

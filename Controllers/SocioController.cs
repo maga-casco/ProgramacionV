@@ -20,7 +20,7 @@ namespace ProgramacionV.Controllers
 
             if (usuario == null)
             {
-                return RedirectToAction("Index", "Socio");
+                return RedirectToAction("Index", "Usuario");
             }
 
             return View();
@@ -44,6 +44,27 @@ namespace ProgramacionV.Controllers
                 }
 
                 sqlConnection.Open();
+
+                // Verificar si el DNI ya existe
+                string verificarDni =
+                    @"SELECT COUNT(*) FROM Socios WHERE DNI = @DNI";
+
+                using (SqlCommand cmdVerificar =
+                    new SqlCommand(verificarDni, sqlConnection))
+                {
+                    cmdVerificar.Parameters.AddWithValue("@DNI", model.DNI);
+
+                    int existe = (int)cmdVerificar.ExecuteScalar();
+
+                    if (existe > 0)
+                    {
+                        ModelState.AddModelError(
+                            "DNI",
+                            "Ya existe un socio registrado con ese DNI.");
+
+                        return View(model);
+                    }
+                }
 
                 string query = @"INSERT INTO Socios(Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion, Activo)
                                     VALUES (@Nombre, @Apellido, @DNI, @FechaNacimiento, @Telefono, @Email, @Direccion, @Activo)";
@@ -137,6 +158,15 @@ namespace ProgramacionV.Controllers
 
         public ActionResult Edit(int id)
         {
+
+            var usuario =
+                HttpContext.Session.GetString("UsuarioLogueado");
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
+
             SocioViewModel socio = new SocioViewModel();
 
             string connectionString =
@@ -170,8 +200,8 @@ namespace ProgramacionV.Controllers
                             dr["Telefono"].ToString();
                         socio.Email =
                             dr["Email"].ToString();
-                        socio.Direccion =
-                            dr["Direccion"].ToString();
+                        socio.Direccion = dr["Direccion"].ToString();
+                        socio.Activo = Convert.ToBoolean(dr["Activo"]);
                     }
                 }
             }
@@ -229,7 +259,7 @@ namespace ProgramacionV.Controllers
                   FechaNacimiento = @FechaNacimiento,
                   Telefono = @Telefono,
                   Email = @Email,
-                  Direccion = @Direccion
+                  Direccion = @Direccion,
                     Activo = @Activo
               WHERE Id = @Id";
 
@@ -258,6 +288,14 @@ namespace ProgramacionV.Controllers
 
         public ActionResult Delete(int id)
         {
+            var usuario =
+            HttpContext.Session.GetString("UsuarioLogueado");
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
+
             SocioViewModel socio = new SocioViewModel();
 
             string connectionString =
